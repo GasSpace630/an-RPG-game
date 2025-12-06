@@ -2,15 +2,19 @@
 #include "ctime" // for time() in seeding
 #include "vector"
 #include "memory" // for unique_ptr
+#include "algorithm" // for remove_if
 #include "iostream"
+
+class Player;
 
 // Base class player and enemies
 class Entity {
 public:
 	Vector2 position = {0.0f,0.0f};
 	int size = 10;
+	bool alive = true;
 	
-	virtual void Update() = 0;
+	virtual void Update(const Player& player) = 0;
 	virtual void Draw() = 0;
 	
 	virtual ~Entity() = default;
@@ -22,7 +26,8 @@ public:
 	int size = 30; // Radius of circle *Temporary*
 	int speed = 6;
 	Vector2 position = {0,0};
-	Color color = BLUE;
+	Rectangle rect = {0,0,30,30};
+	Color color = LIME;
 	
 	// WASD,Arrow key movement
 	void movementSystem(){
@@ -32,13 +37,15 @@ public:
 		if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {position.x += speed;}
 		}
 	
-	void Update() override {
+	void Update(const Player& player) override {
 		movementSystem();
 		}
 	// Drawing the player just a blue circle for now
 	void Draw() override {
-		DrawCircleV(position, size, color);
-		DrawText("Player", (position.x-size), (position.y-size), 16 , BLACK);
+		rect.x = position.x;
+		rect.y = position.y;
+		DrawRectangleRec(rect, color);
+		DrawText("Player", (position.x), (position.y), 16 , BLACK);
 		}
 	};
 
@@ -52,10 +59,14 @@ public:
 	Vector2 position = {100, 100};
 	Color color = RED;
 	
+	bool isCollision;
+	
 	int directionX = 0;
 	int directionY = 0;
 	float directionChangeDelay = 1.0f;
 	float directionChangeTimer = 0.0f;
+	
+	// Random Movement
 	void movementSystem() {
 		directionChangeTimer += GetFrameTime();
 		
@@ -72,9 +83,16 @@ public:
 			position.y += (speed * directionY);
 			}
 		}
+	
+	void collisionSystem(const Player& player) {
+		isCollision = CheckCollisionCircleRec(position, size, player.rect);
+		if (isCollision) {alive = false;}
+		}
+	
 	// Update stuff
-	void Update() override {
+	void Update(const Player& player) override {
 		movementSystem();
+		collisionSystem(player);
 		}
 	// Drawing a circle
 	void Draw() {
@@ -118,7 +136,12 @@ int main(void) {
 	// Main loop
 	while(!WindowShouldClose()){
 		// Update all entities
-		for (const auto& entity : entities) {entity -> Update();}
+		for (const auto& entity : entities) {entity -> Update(*playerRawPtr);}
+		// removing entities if not alive 
+		auto new_end = std::remove_if(entities.begin(), entities.end(), [](const auto& entityPtr) {
+			return entityPtr->alive == false;
+		});
+		entities.erase(new_end, entities.end());
 		// Setting camera centered to player
 		camera.target = playerRawPtr -> position;
 		
@@ -146,3 +169,9 @@ int main(void) {
 
 	return 0;
 }
+
+
+/*
+ * I use player on Update functions of everything now, find a way to change that!
+ * I dont understand how i am removing enemies yet!
+ * */
