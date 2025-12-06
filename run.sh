@@ -1,3 +1,5 @@
+# My Makefile!
+
 clear
 g++ -o game main.cpp \
     -Wall -std=c++14 -O2 \
