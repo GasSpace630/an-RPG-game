@@ -14,22 +14,25 @@ public:
 	Color color = RED;
 	float size = 10.0f;
 	Rectangle rect = {0 , 0 , 10 , 10};
+
+	float health = 100.0f;
 	bool alive = true;
 	
-	virtual void Update(const Player& player) = 0;
-	virtual void Draw() = 0;
+	void Update(const Player& player);
+	void Draw();
 	
 	virtual ~Entity() = default;
 	};
 
 // Player class for player stuff
-class Player {
+class Player : public Entity{
 public:
 	float size = 30.0f; // Radius of circle *Temporary*
 	float speed = 6.0f;
 	Vector2 position = {0,0};
 	Rectangle rect = {position.x , position.y , size , size};
 	Color color = LIME;
+	float strength = 10.0f;
 	
 	// WASD,Arrow key movement
 	void movementSystem() {
@@ -90,21 +93,29 @@ public:
 	
 	void collisionSystem(const Player& player) {
 		isCollision = CheckCollisionRecs(rect , player.rect);
-		if (isCollision) {alive = false;
-		std::cout << "Collision" << std::endl;}
+		if (isCollision && IsKeyPressed(KEY_K)) {
+			health -= player.strength;
+			color = RAYWHITE;
+		}else {
+			color = RED;
 		}
+	}
 	
 	// Update stuff
-	void Update(const Player& player) override {
+	void Update(const Player& player) {
 		movementSystem();
 		collisionSystem(player);
+
+		if (health <= 0) {alive = false;}
 		}
 	// Drawing
 	void Draw() {
 		rect.x = position.x;
 		rect.y = position.y;
 		DrawRectangleRec(rect , color);
-		DrawText("Enemy", (position.x), (position.y), 16 , BLACK);
+		char textBuffer[64];
+		snprintf(textBuffer , 64 , "Enemy : %.2f" , health);
+		DrawText(textBuffer , (position.x), (position.y), 10 , BLACK);
 		}
 	};
 
