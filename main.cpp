@@ -11,7 +11,9 @@ class Player;
 class Entity {
 public:
 	Vector2 position = {0.0f,0.0f};
+	Color color = RED;
 	int size = 10;
+	Rectangle rect = {10 , 10 , 0 , 0};
 	bool alive = true;
 	
 	virtual void Update(const Player& player) = 0;
@@ -21,7 +23,7 @@ public:
 	};
 
 // Player class for player stuff
-class Player : public Entity {
+class Player {
 public:
 	int size = 30; // Radius of circle *Temporary*
 	int speed = 6;
@@ -30,18 +32,19 @@ public:
 	Color color = LIME;
 	
 	// WASD,Arrow key movement
-	void movementSystem(){
+	void movementSystem() {
+		// change to click to move
 		if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {position.y -= speed;}
 		if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {position.y += speed;}
 		if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {position.x -= speed;}
 		if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {position.x += speed;}
 		}
 	
-	void Update(const Player& player) override {
+	void Update() {
 		movementSystem();
 		}
 	// Drawing the player just a blue circle for now
-	void Draw() override {
+	void Draw() {
 		rect.x = position.x;
 		rect.y = position.y;
 		DrawRectangleRec(rect, color);
@@ -63,7 +66,7 @@ public:
 	
 	int directionX = 0;
 	int directionY = 0;
-	float directionChangeDelay = 1.0f;
+	float directionChangeDelay = GetRandomValue(2 , 3);
 	float directionChangeTimer = 0.0f;
 	
 	// Random Movement
@@ -96,6 +99,7 @@ public:
 		}
 	// Drawing a circle
 	void Draw() {
+
 		DrawCircleV(position, size, color);
 		}
 	};
@@ -116,15 +120,17 @@ int main(void) {
 	SetRandomSeed((unsigned int)time(0));
 	
 	// Initializing game objects
-	std::vector<std::unique_ptr<Entity>> entities;
 	auto playerPtr = std::make_unique<Player>();
-	auto enemy1Ptr = std::make_unique<Enemy>();
-	
-	// A ray pointer to player for camera tracking
+	// A raw pointer to player for camera tracking
 	Player* playerRawPtr = playerPtr.get();
-	// Adding them to entity list
-	entities.push_back(std::move(playerPtr));
-	entities.push_back(std::move(enemy1Ptr));
+
+	// making enemies
+	std::vector<std::unique_ptr<Enemy>> entities;
+	const int ENEMY_COUNT = 4;
+	for (int i = 0; i < ENEMY_COUNT; ++i) {
+		auto newEnemyPtr = std::make_unique<Enemy>();
+		entities.push_back(std::move(newEnemyPtr));
+	}
 	
 	// Setting the world camera
 	Camera2D camera = {0};
@@ -133,8 +139,10 @@ int main(void) {
 	camera.offset = (Vector2){ GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f };
 	camera.target = (Vector2){ 0.0f, 0.0f }; // Start camera at world origin
 
-	// Main loop
+	// Main loop ---------------------------------------------------
 	while(!WindowShouldClose()){
+
+		playerRawPtr -> Update();
 		// Update all entities
 		for (const auto& entity : entities) {entity -> Update(*playerRawPtr);}
 		// removing entities if not alive 
@@ -145,12 +153,15 @@ int main(void) {
 		// Setting camera centered to player
 		camera.target = playerRawPtr -> position;
 		
+		// Drawing stuff ---------------------------------------------
 		BeginDrawing();
 		
 		// White background
-		ClearBackground(RAYWHITE);
+		ClearBackground(GREEN);
 		
 		BeginMode2D(camera);
+
+		playerRawPtr -> Draw();
 		
 		// Drawing entites
 		for (const auto& entity : entities) {entity -> Draw();}
@@ -172,6 +183,5 @@ int main(void) {
 
 
 /*
- * I use player on Update functions of everything now, find a way to change that!
  * I dont understand how i am removing enemies yet!
  * */
