@@ -12,8 +12,8 @@ class Entity {
 public:
 	Vector2 position = {0.0f,0.0f};
 	Color color = RED;
-	int size = 10;
-	Rectangle rect = {10 , 10 , 0 , 0};
+	float size = 10.0f;
+	Rectangle rect = {0 , 0 , 10 , 10};
 	bool alive = true;
 	
 	virtual void Update(const Player& player) = 0;
@@ -25,10 +25,10 @@ public:
 // Player class for player stuff
 class Player {
 public:
-	int size = 30; // Radius of circle *Temporary*
-	int speed = 6;
+	float size = 30.0f; // Radius of circle *Temporary*
+	float speed = 6.0f;
 	Vector2 position = {0,0};
-	Rectangle rect = {0,0,30,30};
+	Rectangle rect = {position.x , position.y , size , size};
 	Color color = LIME;
 	
 	// WASD,Arrow key movement
@@ -57,16 +57,17 @@ class Enemy : public Entity {
 private:
 	bool IsMoving = false;
 public:
-	int size = 20;
-	int speed = 2;
+	float size = 30.0f;
+	float speed = 2.0f;
 	Vector2 position = {100, 100};
 	Color color = RED;
+	Rectangle rect = {position.x , position.y , size , size};
 	
 	bool isCollision;
 	
 	int directionX = 0;
 	int directionY = 0;
-	float directionChangeDelay = GetRandomValue(2 , 3);
+	float directionChangeDelay = GetRandomValue(1 , 3);
 	float directionChangeTimer = 0.0f;
 	
 	// Random Movement
@@ -88,8 +89,9 @@ public:
 		}
 	
 	void collisionSystem(const Player& player) {
-		isCollision = CheckCollisionCircleRec(position, size, player.rect);
-		if (isCollision) {alive = false;}
+		isCollision = CheckCollisionRecs(rect , player.rect);
+		if (isCollision) {alive = false;
+		std::cout << "Collision" << std::endl;}
 		}
 	
 	// Update stuff
@@ -97,10 +99,12 @@ public:
 		movementSystem();
 		collisionSystem(player);
 		}
-	// Drawing a circle
+	// Drawing
 	void Draw() {
-
-		DrawCircleV(position, size, color);
+		rect.x = position.x;
+		rect.y = position.y;
+		DrawRectangleRec(rect , color);
+		DrawText("Enemy", (position.x), (position.y), 16 , BLACK);
 		}
 	};
 
