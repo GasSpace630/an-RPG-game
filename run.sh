@@ -1,7 +1,7 @@
 # My Makefile!
 
 clear
-g++ -o game main.cpp \
+g++ -o game main.cpp src/player.cpp src/enemy.cpp\
     -Wall -std=c++14 -O2 \
     -I. -I~/raylib/src \
     -L. -L~/raylib/src \

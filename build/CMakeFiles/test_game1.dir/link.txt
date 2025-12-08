@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/test_game1.dir/src/enemy.cpp.o CMakeFiles/test_game1.dir/src/player.cpp.o CMakeFiles/test_game1.dir/main.cpp.o -o test_game1  -Wl,-rpath,/usr/local/lib /usr/local/lib/libraylib.so.5.5.0 -lm 

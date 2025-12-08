@@ -4,7 +4,9 @@ Tasks
 * Give the player a external collision 
 	box bigger than player size,
 	Like a detector
-* Add some color so my eyes wont hurt
-	Dont over do this
-* Add some kind of indicator to see how make kills you have
-*
+* The GUI
+	Add some kind of indicator to see how many kills you have
+
+* Give the player something for killing the enemy stuff
+	Make a child class of the enemies for some *monster or something
+* Change the enemy and player class to another file
