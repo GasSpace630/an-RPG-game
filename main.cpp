@@ -1,9 +1,12 @@
 #include "raylib.h"
+#include "raymath.h"
 #include "ctime" // for time() in seeding
 #include "vector"
 #include "memory" // for unique_ptr
 #include "algorithm" // for remove_if
 #include "iostream"
+
+#include "include/colors.h" // My colours
 
 class Player;
 
@@ -27,20 +30,27 @@ public:
 // Player class for player stuff
 class Player : public Entity{
 public:
-	float size = 30.0f; // Radius of circle *Temporary*
-	float speed = 6.0f;
+	float size = 26.0f; // Radius of circle *Temporary*
+	float speed = 4.0f;
 	Vector2 position = {0,0};
 	Rectangle rect = {position.x , position.y , size , size};
-	Color color = {27, 122, 207, 225};
+	Color color = PLAYER_BLUE;
 	float strength = 10.0f;
-	
+	Vector2 direction = {0 , 0};
+
 	// WASD,Arrow key movement
 	void movementSystem() {
-		// change to click to move
-		if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {position.y -= speed;}
-		if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {position.y += speed;}
-		if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {position.x -= speed;}
-		if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {position.x += speed;}
+		direction = {0.0f , 0.0f};
+		if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {direction.y -= 1.0f;}
+		if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {direction.y += 1.0f;}
+		if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {direction.x -= 1.0f;}
+		if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {direction.x += 1.0f;}
+		
+		// normalizing direction
+		if (direction.x != 0.0f || direction.y != 0.0f) {
+			direction = Vector2Normalize(direction);
+			position = Vector2Add(position , Vector2Scale(direction , speed));
+		}
 	}
 	
 	void Update() {
@@ -61,15 +71,16 @@ private:
 	bool IsMoving = false;
 public:
 	float size = 30.0f;
-	float speed = 2.0f;
+	float speed = 1.0f;
 	Vector2 position = {100, 100};
-	Color color = {219, 50, 50};
+	Color color = ENEMY_RED;
 	Rectangle rect = {position.x , position.y , size , size};
 	
 	bool isCollision;
 	
 	int directionX = 0;
 	int directionY = 0;
+	Vector2 direction = {0.0f , 0.0f};
 	float directionChangeDelay = GetRandomValue(1 , 3);
 	float directionChangeTimer = 0.0f;
 	
@@ -79,15 +90,15 @@ public:
 		
 		if (directionChangeTimer >= directionChangeDelay) {
 			directionChangeTimer = 0.0f;
-			directionX = GetRandomValue(-1,1);
-			directionY = GetRandomValue(-1,1);
+			direction.x = GetRandomValue(-1,1);
+			direction.y = GetRandomValue(-1,1);
 		}
-		if (directionX != 0 || directionY != 0) {IsMoving = true;}
+		if (direction.x != 0 || direction.y != 0) {IsMoving = true;}
 		else {IsMoving = false;}
 		
 		if (IsMoving) {
-			position.x += (speed * directionX);
-			position.y += (speed * directionY);
+			direction = Vector2Normalize(direction);
+			position = Vector2Add(position , Vector2Scale(direction , speed));
 		}
 	}
 	
@@ -97,7 +108,7 @@ public:
 			health -= player.strength;
 			color = RAYWHITE;
 		}else {
-			color = RED;
+			color = ENEMY_RED;
 		}
 	}
 	
@@ -172,7 +183,7 @@ int main(void) {
 		BeginDrawing();
 		
 		// White background
-		ClearBackground(GrassGreen);
+		ClearBackground(GRASS_GREEN);
 		
 		BeginMode2D(camera);
 
