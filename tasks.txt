@@ -1,0 +1,10 @@
+Tasks
+---
+
+* Give the player a external collision 
+	box bigger than player size,
+	Like a detector
+* Add some color so my eyes wont hurt
+	Dont over do this
+* Add some kind of indicator to see how make kills you have
+*

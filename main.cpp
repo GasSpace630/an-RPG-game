@@ -22,7 +22,7 @@ public:
 	void Draw();
 	
 	virtual ~Entity() = default;
-	};
+};
 
 // Player class for player stuff
 class Player : public Entity{
@@ -31,7 +31,7 @@ public:
 	float speed = 6.0f;
 	Vector2 position = {0,0};
 	Rectangle rect = {position.x , position.y , size , size};
-	Color color = LIME;
+	Color color = {27, 122, 207, 225};
 	float strength = 10.0f;
 	
 	// WASD,Arrow key movement
@@ -41,19 +41,19 @@ public:
 		if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {position.y += speed;}
 		if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {position.x -= speed;}
 		if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {position.x += speed;}
-		}
+	}
 	
 	void Update() {
 		movementSystem();
-		}
+	}
 	// Drawing the player just a blue circle for now
 	void Draw() {
 		rect.x = position.x;
 		rect.y = position.y;
 		DrawRectangleRec(rect, color);
 		DrawText("Player", (position.x), (position.y), 16 , BLACK);
-		}
-	};
+	}
+};
 
 // Enemys , stuff you can beat up to get stuff
 class Enemy : public Entity {
@@ -63,7 +63,7 @@ public:
 	float size = 30.0f;
 	float speed = 2.0f;
 	Vector2 position = {100, 100};
-	Color color = RED;
+	Color color = {219, 50, 50};
 	Rectangle rect = {position.x , position.y , size , size};
 	
 	bool isCollision;
@@ -81,15 +81,15 @@ public:
 			directionChangeTimer = 0.0f;
 			directionX = GetRandomValue(-1,1);
 			directionY = GetRandomValue(-1,1);
-			}
+		}
 		if (directionX != 0 || directionY != 0) {IsMoving = true;}
 		else {IsMoving = false;}
 		
 		if (IsMoving) {
 			position.x += (speed * directionX);
 			position.y += (speed * directionY);
-			}
 		}
+	}
 	
 	void collisionSystem(const Player& player) {
 		isCollision = CheckCollisionRecs(rect , player.rect);
@@ -107,7 +107,7 @@ public:
 		collisionSystem(player);
 
 		if (health <= 0) {alive = false;}
-		}
+	}
 	// Drawing
 	void Draw() {
 		rect.x = position.x;
@@ -116,8 +116,8 @@ public:
 		char textBuffer[64];
 		snprintf(textBuffer , 64 , "Enemy : %.2f" , health);
 		DrawText(textBuffer , (position.x), (position.y), 10 , BLACK);
-		}
-	};
+	}
+};
 
 // The game stuff
 int main(void) {
@@ -172,7 +172,7 @@ int main(void) {
 		BeginDrawing();
 		
 		// White background
-		ClearBackground(GREEN);
+		ClearBackground(GrassGreen);
 		
 		BeginMode2D(camera);
 
@@ -189,7 +189,7 @@ int main(void) {
 		
 		EndDrawing();
 		
-		}
+	}
 	// CLosing the window
 	CloseWindow();
 
