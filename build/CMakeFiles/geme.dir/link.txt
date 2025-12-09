@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/geme.dir/src/enemy.cpp.o CMakeFiles/geme.dir/src/player.cpp.o CMakeFiles/geme.dir/main.cpp.o -o geme  -Wl,-rpath,/usr/local/lib /usr/local/lib/libraylib.so.5.5.0 -lm 

@@ -195,26 +195,8 @@ game_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 game_SOURCE_DIR:STATIC=/home/gasspace/raylib_games/test_game1
 
-//Value Computed by CMake
-geme_BINARY_DIR:STATIC=/home/gasspace/raylib_games/test_game1/build
-
-//Value Computed by CMake
-geme_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-geme_SOURCE_DIR:STATIC=/home/gasspace/raylib_games/test_game1
-
 //The directory containing a CMake configuration file for raylib.
 raylib_DIR:PATH=/usr/local/lib/cmake/raylib
-
-//Value Computed by CMake
-test_game1_BINARY_DIR:STATIC=/home/gasspace/raylib_games/test_game1/build
-
-//Value Computed by CMake
-test_game1_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-test_game1_SOURCE_DIR:STATIC=/home/gasspace/raylib_games/test_game1
 
 
 ########################
