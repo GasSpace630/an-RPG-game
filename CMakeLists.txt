@@ -1,8 +1,11 @@
+# Use this to build
+# cmake --build . -j
+
 # Minimum version of CMake required
 cmake_minimum_required(VERSION 3.10)
 
 # The name of your project (This will be the name of your executable)
-project(test_game1 CXX)
+project(game CXX)
 
 # Specify the standard C++ version
 set(CMAKE_CXX_STANDARD 17)

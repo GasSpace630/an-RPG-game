@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_game1
+# Target rules for targets named game
 
 # Build rule for target.
-test_game1: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_game1
-.PHONY : test_game1
+game: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 game
+.PHONY : game
 
 # fast build rule for target.
-test_game1/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/build
-.PHONY : test_game1/fast
+game/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/build
+.PHONY : game/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -142,7 +142,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -150,7 +150,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 src/enemy.o: src/enemy.cpp.o
@@ -158,7 +158,7 @@ src/enemy.o: src/enemy.cpp.o
 
 # target to build an object file
 src/enemy.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/src/enemy.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/enemy.cpp.o
 .PHONY : src/enemy.cpp.o
 
 src/enemy.i: src/enemy.cpp.i
@@ -166,7 +166,7 @@ src/enemy.i: src/enemy.cpp.i
 
 # target to preprocess a source file
 src/enemy.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/src/enemy.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/enemy.cpp.i
 .PHONY : src/enemy.cpp.i
 
 src/enemy.s: src/enemy.cpp.s
@@ -174,7 +174,7 @@ src/enemy.s: src/enemy.cpp.s
 
 # target to generate assembly for a file
 src/enemy.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/src/enemy.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/enemy.cpp.s
 .PHONY : src/enemy.cpp.s
 
 src/player.o: src/player.cpp.o
@@ -182,7 +182,7 @@ src/player.o: src/player.cpp.o
 
 # target to build an object file
 src/player.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/src/player.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/player.cpp.o
 .PHONY : src/player.cpp.o
 
 src/player.i: src/player.cpp.i
@@ -190,7 +190,7 @@ src/player.i: src/player.cpp.i
 
 # target to preprocess a source file
 src/player.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/src/player.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/player.cpp.i
 .PHONY : src/player.cpp.i
 
 src/player.s: src/player.cpp.s
@@ -198,7 +198,7 @@ src/player.s: src/player.cpp.s
 
 # target to generate assembly for a file
 src/player.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_game1.dir/build.make CMakeFiles/test_game1.dir/src/player.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/player.cpp.s
 .PHONY : src/player.cpp.s
 
 # Help Target
@@ -209,7 +209,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test_game1"
+	@echo "... game"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

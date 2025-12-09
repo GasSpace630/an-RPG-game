@@ -1,7 +1,7 @@
 #include "raylib.h"
-#include "raymath.h"
 #include "ctime" // for time() in seeding
 #include "vector"
+//#include "string"
 #include "memory" // for unique_ptr
 #include "algorithm" // for remove_if
 #include "iostream"
@@ -13,7 +13,7 @@
 
 
 // Function def to Draw a GUI
-void DrawGUI();
+void DrawGUI(Player& player);
 
 // The game stuff
 int main(void) {
@@ -79,7 +79,7 @@ int main(void) {
 		
 		EndMode2D();
 
-		DrawGUI();
+		DrawGUI(*playerRawPtr);
 		
 		EndDrawing();
 		
@@ -91,7 +91,16 @@ int main(void) {
 }
 
 
-void DrawGUI() {
+void DrawGUI(Player& player) {
+	// player Kills indicator
+	char killTextBuffer[64];
+	snprintf(killTextBuffer , 64 , "Kills : %i" , player.kills);
+	DrawText(killTextBuffer , GetScreenWidth()-80 , 4 , 20 , BLACK);
+
+	// Game Instructions
+	std::string instructions = "WASD/Arrow Keys - Movement\nK - Attack\n";
+	DrawText(instructions.c_str(), 2 , GetScreenHeight()-32, 16 , BLACK);
+
 	DrawText("just an RPG game", 2, 20, 13, BLACK);
 	DrawFPS(0,0);
 }

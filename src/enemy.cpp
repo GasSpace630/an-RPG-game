@@ -1,9 +1,9 @@
 #include "enemy.h"
 #include "player.h"
+#include "colors.h"
 #include "raymath.h"
 #include <stdio.h>
 
-// Function definitions:
 
 void Enemy::movementSystem() {
 	directionChangeTimer += GetFrameTime();

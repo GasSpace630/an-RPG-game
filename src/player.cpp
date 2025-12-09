@@ -22,7 +22,9 @@ void Player::collisionSystem(std::vector<std::unique_ptr<Enemy>>& enemies) {
 	for (auto& enemy : enemies) {
 		if (CheckCollisionRecs(rect, enemy->rect) && IsKeyPressed(KEY_K)) {
 			enemy->takeDamage(strength);
-		}
+			enemy -> color = RAYWHITE;
+			if (enemy -> health <= 0) {kills += 1;}
+		}else {enemy -> color = ENEMY_RED;}
 	}
 }
 
